@@ -9,23 +9,25 @@ import org.junit.jupiter.api.Test;
 
 class GameTest {
 
-	@DisplayName("Tennis Kata 40")
+	@DisplayName("Tennis Kata 40 - 0")
 	@Test
 	void testName2() throws Exception {
 		
 		// Given
 		Game game = new Game();
+		PlayerScore p1 = new PlayerScore();
+		p1.name = "Federer";
+		PlayerScore p2 = new PlayerScore();
+		p2.name = "Nadal";
 
 		// When
-		game.winPoint("Federer");
-		game.winPoint("Federer");
-		game.winPoint("Federer");
-//		game.winPoint("Federer");
+		game.winPoint(p1,p2);
+		game.winPoint(p1,p2);
+		game.winPoint(p1,p2);
 		
 		// Then
 		assertThat(game.history, hasSize(3));
-		assertThat(game.gamePlayer1, is(3));
-		assertThat(game.scorePlayer("Federer"), is("40"));
+		assertThat(game.scorePlayer(p1, p2), is("40"));
 	}
 	
 	
@@ -35,21 +37,23 @@ class GameTest {
 		
 		// Given
 		Game game = new Game();
+		PlayerScore p1 = new PlayerScore();
+		p1.name = "Federer";
+		PlayerScore p2 = new PlayerScore();
+		p2.name = "Nadal";
 
 		// When
-		game.winPoint("Federer");
-		game.winPoint("Federer");
-		game.winPoint("Federer");
-		game.winPoint("Nadal");
-		game.winPoint("Nadal");
-		game.winPoint("Nadal");
-		game.winPoint("Federer");
+		game.winPoint(p1,p2);
+		game.winPoint(p1,p2);
+		game.winPoint(p1,p2);
+		game.winPoint(p2,p1);
+		game.winPoint(p2,p1);
+		game.winPoint(p2,p1);
+		game.winPoint(p1,p2);
 		
 		// Then
 		assertThat(game.history, hasSize(7));
-		assertThat(game.gamePlayer1, is(4));
-		assertThat(game.gamePlayer2, is(3));
-		assertThat(game.scorePlayer("Federer"), is("ADV"));
+		assertThat(game.scorePlayer(p1, p2), is("ADV"));
 	}
 	
 	@DisplayName("Tennis Kata EQUAL")
@@ -58,22 +62,24 @@ class GameTest {
 		
 		// Given
 		Game game = new Game();
+		PlayerScore p1 = new PlayerScore();
+		p1.name = "Federer";
+		PlayerScore p2 = new PlayerScore();
+		p2.name = "Nadal";
 
 		// When
-		game.winPoint("Federer");
-		game.winPoint("Federer");
-		game.winPoint("Federer");
-		game.winPoint("Nadal");
-		game.winPoint("Nadal");
-		game.winPoint("Nadal");
-		game.winPoint("Nadal");
-		game.winPoint("Federer");
+		game.winPoint(p1,p2);
+		game.winPoint(p1,p2);
+		game.winPoint(p1,p2);
+		game.winPoint(p2,p1);
+		game.winPoint(p2,p1);
+		game.winPoint(p2,p1);
+		game.winPoint(p2,p1);
+		game.winPoint(p1,p2);
 		
 		// Then
 		assertThat(game.history, hasSize(8));
-		assertThat(game.gamePlayer1, is(4));
-		assertThat(game.gamePlayer2, is(4));
-		assertThat(game.scorePlayer("Federer"), is("DEUCE"));
+		assertThat(game.scorePlayer(p1, p2), is("DEUCE"));
 	}
 	
 	@DisplayName("Tennis Kata WIN")
@@ -82,26 +88,29 @@ class GameTest {
 		
 		// Given
 		Game game = new Game();
+		PlayerScore p1 = new PlayerScore();
+		p1.name = "Federer";
+		PlayerScore p2 = new PlayerScore();
+		p2.name = "Nadal";
 
 		// When
-		game.winPoint("Federer");
-		game.winPoint("Federer");
-		game.winPoint("Federer");
-		game.winPoint("Nadal");
-		game.winPoint("Nadal");
-		game.winPoint("Nadal");
-		game.winPoint("Nadal");
-		game.winPoint("Federer");
-		game.winPoint("Nadal");
-		game.winPoint("Federer");
-		game.winPoint("Federer");
-		game.winPoint("Federer");
+		game.winPoint(p1,p2);
+		game.winPoint(p1,p2);
+		game.winPoint(p1,p2);
+		game.winPoint(p2,p1);
+		game.winPoint(p2,p1);
+		game.winPoint(p2,p1);
+		game.winPoint(p2,p1);
+		game.winPoint(p1,p2);
+		game.winPoint(p2,p1);
+		game.winPoint(p1,p2);
+		game.winPoint(p1,p2);
+		game.winPoint(p1,p2);
 		
 		// Then
 		assertThat(game.history, hasSize(12));
-		assertThat(game.gamePlayer1, is(0));
-		assertThat(game.gamePlayer2, is(0));
-		assertThat(game.scorePlayer("Federer"), is("0"));
+		assertThat(p1.nbGame, is(1));
+		assertThat(game.scorePlayer(p1, p2), is("0"));
 	}
 
 }

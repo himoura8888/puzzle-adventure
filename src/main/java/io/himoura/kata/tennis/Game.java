@@ -3,91 +3,65 @@ package io.himoura.kata.tennis;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Hello world!
- *
- */
-public class Game 
-{
-	int gamePlayer1;
-	int gamePlayer2;
-	int scorePlayer1;
-	int scorePlayer2;
-	int timebreakPlayer1;
-	int timebreakPlayer2;
-	
-	List<String> history= new ArrayList<>();
-	
-	void winPoint(String player) {
-		processPoint(player);
-		history.add(player + " " + ("Federer".equals(player) ? gamePlayer1 : gamePlayer2));
+public class Game {
+
+	List<String> history = new ArrayList<>();
+
+	void winPoint(PlayerScore winner, PlayerScore loser) {
+		processPoint(winner, loser);
+		history.add(winner + " " + winner.nbPoint);
 	}
-	
-	String scorePlayer(String player) {
-		switch (gamePlayer1) {
-		case 0:
+
+	String scorePlayer(PlayerScore player, PlayerScore looser) {
+		if (player.nbPoint == 0) {
 			return "0";
-		case 1 : 
+		} else if (player.nbPoint == 1) {
 			return "15";
-		case 2 : 
+		} else if (player.nbPoint == 2) {
 			return "30";
-		case 3 :
+		} else if (player.nbPoint == 3) {
 			return "40";
 		}
-		if (gamePlayer1 > 3) {
-			// ADV, EGAL
-			if (gamePlayer1 == gamePlayer2) {
+		else {
+			if (player.nbPoint == looser.nbPoint) {
 				return "DEUCE";
-			}
-			else if (gamePlayer1 == (gamePlayer2+1)){
+			} else if (player.nbPoint == (looser.nbPoint + 1)) {
 				return "ADV";
-			}
-			else {
+			} else {
 				return "40";
 			}
 		}
-		return "0";
 	}
-	
-	
-	void processPoint(String player) {
-		if ("Federer".equals(player)) {	
-				if (gamePlayer1 < 3) {
-					gamePlayer1++;
-				}
-				else {
-					// ADV, EGAL
-					if (gamePlayer1 == gamePlayer2 || (gamePlayer1+1) == gamePlayer2) {
-						gamePlayer1++;
-					}
-					// Game Win
-					else if (gamePlayer1 == (gamePlayer2+1)){
-						gamePlayer1 = 0;
-						gamePlayer2 = 0;
-						scorePlayer1++;
-					}
-				}
+
+	void processPoint(PlayerScore winner, PlayerScore loser) {
+		if (winner.nbPoint < 3) {
+			winner.nbPoint++;
+		} else {
+			// ADV, EGAL
+			if (winner.nbPoint == loser.nbPoint || (winner.nbPoint + 1) == loser.nbPoint) {
+				winner.nbPoint++;
 			}
-			else {
-				if (gamePlayer2 < 3) {
-					gamePlayer2++;
-				}
-				else {
-					// ADV, EGAL
-					if (gamePlayer2 == gamePlayer1 || (gamePlayer2+1) == gamePlayer1) {
-						gamePlayer2++;
-					}
-					// Game Win
-					else if (gamePlayer2 == (gamePlayer1+1)){
-						gamePlayer1 = 0;
-						gamePlayer2 = 0;
-						scorePlayer2++;
-					}
-				}
+			// Game Win
+			else if (winner.nbPoint == (loser.nbPoint + 1)) {
+				winner.nbPoint = 0;
+				loser.nbPoint = 0;
+				winner.nbGame++;
 			}
+		}
 	}
-	
-    public static void main( String[] args )
-    {
-    }
+
+	public static void main(String[] args) {
+	}
+}
+
+enum Score {
+	S0, S15, S30, S40, DEUCE, ADV;
+}
+
+class PlayerScore {
+	String name;
+	int nbPoint;
+	int nbGame;
+	int nbSet;
+	int nbTieBreak;
 }
