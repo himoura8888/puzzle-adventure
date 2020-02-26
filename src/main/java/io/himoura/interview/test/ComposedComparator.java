@@ -33,17 +33,7 @@ public class ComposedComparator {
 		}
 	};
 	
-	public static void main(String[] args) {	
-		
-//		Arrays.stream(persons).forEach(System.out::println);
-//		
-//		System.out.println("------------------");
-//		Arrays.sort(persons, byNameAge);
-//		Arrays.stream(persons).forEach(System.out::println);
-//		
-//		System.out.println("------------------");
-//		Arrays.sort(persons, byNameAgeReversed);
-//		Arrays.stream(persons).forEach(System.out::println);
+	public static void main(String[] args) {
 	}
 	
 }
