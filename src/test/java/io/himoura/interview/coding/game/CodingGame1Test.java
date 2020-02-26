@@ -14,9 +14,10 @@ class CodingGame1Test {
 	void test() {
 		int numbers[] = {1,-28,88,200,7};
 		assertThat(CodingGame1.findLargest(numbers), is(200));
+		assertThat(CodingGame1.findLargest2(numbers), is(200));
 	}
 	
-	@DisplayName("")
+	@DisplayName("Bad input")
 	@Test
 	void testName2() throws Exception {
 		
@@ -27,6 +28,8 @@ class CodingGame1Test {
 		// Then
 		assertThrows(IllegalArgumentException.class,()->CodingGame1.findLargest(emptyArray));
 		assertThrows(IllegalArgumentException.class,()->CodingGame1.findLargest(null));
+		assertThrows(IllegalArgumentException.class,()->CodingGame1.findLargest2(emptyArray));
+		assertThrows(IllegalArgumentException.class,()->CodingGame1.findLargest2(null));
 	}
 
 }

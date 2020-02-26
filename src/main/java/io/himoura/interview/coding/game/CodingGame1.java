@@ -1,5 +1,6 @@
 package io.himoura.interview.coding.game;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -27,6 +28,14 @@ public class CodingGame1 {
 			}
 		}
 		return largestValue;
+	}
+	
+	static int findLargest2(int[] numbers) {
+		if(Objects.isNull(numbers) || numbers.length < 1) {
+			throw new IllegalArgumentException("Contains at least one value");
+		}
+		Arrays.parallelSort(numbers);
+		return numbers[numbers.length-1];
 	}
 
 }
