@@ -8,6 +8,8 @@ import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 
 interface ExerciceFacade {
@@ -19,6 +21,8 @@ interface ExerciceFacade {
 	List<String> transformFlatten(List<List<String>> list);
 
 	Person getOldest(List<Person> list);
+
+	Person getYoungest(List<Person> list);
 
 	Integer sumAllElement(List<Integer> list);
 
@@ -80,7 +84,10 @@ interface ExerciceFacade {
 
 	Map<String, List<Person>> groupByNationality(List<Person> collection);
 
+	Map<Job, List<Person>> groupByJobAndModifiedNationality(List<Person> collection);
+
 	Object namesToString(List<Person> collection);
+
 }
 
 public class Exercice implements ExerciceFacade {
@@ -147,12 +154,22 @@ public class Exercice implements ExerciceFacade {
 
 	@Override
 	public Map<String, List<Person>> groupByNationality(List<Person> collection) {
-		return collection.stream().collect(Collectors.groupingBy(p->p.nationality));
+		return collection.stream().collect(Collectors.groupingBy(p -> p.nationality));
 	}
 
 	@Override
 	public Object namesToString(List<Person> collection) {
-		return collection.stream().map(p->p.name).collect(Collectors.joining(", ","Names: ","."));
+		return collection.stream().map(p -> p.name).collect(Collectors.joining(", ", "Names: ", "."));
+	}
+
+	@Override
+	public Person getYoungest(List<Person> list) {
+		return list.stream().min((p1, p2) -> p1.age - p2.age > 0 ? 1 : -1).get();
+	}
+
+	@Override
+	public Map<Job, List<Person>> groupByJobAndModifiedNationality(List<Person> collection) {
+		return collection.stream().peek(p->p.nationality="modified").collect(Collectors.groupingBy(p -> p.job));
 	}
 
 }
@@ -278,27 +295,55 @@ class ExerciceLegacy implements ExerciceFacade {
 	@Override
 	public Map<String, List<Person>> groupByNationality(List<Person> collection) {
 		Map<String, List<Person>> result = new HashMap<>();
-		
+
 		for (Person person : collection) {
 			if (!result.containsKey(person.nationality)) {
 				result.put(person.nationality, new ArrayList<>());
-			} 
+			}
 			result.get(person.nationality).add(person);
 		}
-		
+
 		return result;
 	}
 
 	@Override
 	public Object namesToString(List<Person> collection) {
-		
+
 		StringBuffer buffer = new StringBuffer("Names: ");
-		for(Person p: collection) {
+		for (Person p : collection) {
 			buffer.append(p.name).append(", ");
 		}
-		buffer.setLength(buffer.length()-2);
-		
+		buffer.setLength(buffer.length() - 2);
+
 		return buffer.append(".").toString();
+	}
+
+	@Override
+	public Person getYoungest(List<Person> list) {
+
+		list.sort(new Comparator<Person>() {
+			@Override
+			public int compare(Person o1, Person o2) {
+				return o1.age.compareTo(o2.age);
+			}
+		});
+
+		return list.get(0);
+	}
+
+	@Override
+	public Map<Job, List<Person>> groupByJobAndModifiedNationality(List<Person> collection) {
+		Map<Job, List<Person>> result = new HashMap<>();
+
+		for (Person person : collection) {
+			if (!result.containsKey(person.job)) {
+				person.nationality = "modified";
+				result.put(person.job, new ArrayList<>());
+			}
+			result.get(person.job).add(person);
+		}
+
+		return result;
 	}
 
 }
@@ -307,6 +352,7 @@ class Person {
 	String name;
 	Integer age;
 	String nationality;
+	Job job;
 
 	/**
 	 * @param name
@@ -322,4 +368,14 @@ class Person {
 		this.nationality = string2;
 	}
 
+	public Person(String string, int i, String string2, Job job) {
+		this(string, i);
+		this.nationality = string2;
+		this.job = job;
+	}
+
+}
+
+enum Job {
+	STUDENT, ENGINEER, RETIRED
 }

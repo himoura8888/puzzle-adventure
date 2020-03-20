@@ -2,6 +2,7 @@ package io.himoura.kata.stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
 import java.util.Arrays;
@@ -92,6 +93,28 @@ class ExerciceTest {
 		// Then
 		assertThat(target8, is(eva));
 		assertThat(targetLegacy, is(eva));
+	}
+	
+	@DisplayName("Get youngest person from the collection")
+	@Test
+	void getYoungestPersonShouldReturnYoungestPerson() throws Exception {
+		
+		// Given
+		ExerciceFacade exercice8 = new Exercice();
+		ExerciceLegacy exercice7 = new ExerciceLegacy();
+		
+		Person sara = new Person("Sara", 4);
+		Person viktor = new Person("Viktor", 40);
+		Person eva = new Person("Eva", 42);
+		List<Person> collection = Arrays.asList(sara, eva, viktor);
+		
+		// When
+		final Person target8 = exercice8.getYoungest(collection);
+		final Person targetLegacy = exercice7.getYoungest(collection);
+		
+		// Then
+		assertThat(target8, is(sara));
+		assertThat(targetLegacy, is(sara));
 	}
 
 	@DisplayName("Sum all elements of a collection")
@@ -225,6 +248,34 @@ class ExerciceTest {
 		// Then
 	        assertThat(exercice8.namesToString(collection),is("Names: Sara, Viktor, Eva."));
 	        assertThat(exercice7.namesToString(collection),is("Names: Sara, Viktor, Eva."));
+	}
+	
+	@DisplayName("Group people by Job")
+	@Test
+	void testGroupJob() throws Exception {
+		
+		// Given
+		ExerciceFacade exercice8 = new Exercice();
+		ExerciceLegacy exercice7 = new ExerciceLegacy();
+		Person sara = new Person("Sara", 4, "Norwegian", Job.STUDENT);
+        Person viktor = new Person("Viktor", 40, "Serbian", Job.ENGINEER);
+        Person eva = new Person("Eva", 42, "Norwegian", Job.ENGINEER);
+        Person lionel = new Person("Lionel", 72, "Norwegian", Job.RETIRED);
+        List<Person> collection = Arrays.asList(sara, eva, viktor, lionel);
+                
+		// When
+        Map<Job, List<Person>> result8 = exercice8.groupByJobAndModifiedNationality(collection);
+        Map<Job, List<Person>> result7 = exercice7.groupByJobAndModifiedNationality(collection);
+
+		// Then
+        assertThat(result8.get(Job.STUDENT), contains(sara));
+        assertThat(result8.get(Job.RETIRED),contains(lionel));
+        assertThat(result8.get(Job.RETIRED).get(0).nationality, is("modified"));
+        assertThat(result8.get(Job.ENGINEER), containsInAnyOrder(viktor, eva));
+        assertThat(result7.get(Job.STUDENT),contains(sara));
+        assertThat(result7.get(Job.RETIRED),contains(lionel));
+        assertThat(result7.get(Job.RETIRED).get(0).nationality, is("modified"));
+        assertThat(result7.get(Job.ENGINEER), containsInAnyOrder(viktor, eva));
 	}
 
 }
