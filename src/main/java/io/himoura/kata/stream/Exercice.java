@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.IntSummaryStatistics;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -176,7 +177,7 @@ public class Exercice implements ExerciceFacade {
 	public List<Person> sortByNameAge(List<Person> collection) {
 		return collection.stream()
 				.sorted(Comparator.comparing(Person::getName).thenComparing(Comparator.comparing(Person::getAge)))
-				.collect(Collectors.toList());
+				.collect(Collectors.toCollection(LinkedList::new));
 	}
 
 }

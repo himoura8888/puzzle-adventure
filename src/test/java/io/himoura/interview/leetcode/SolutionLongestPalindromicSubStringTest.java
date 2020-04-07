@@ -20,7 +20,7 @@ class SolutionLongestPalindromicSubStringTest {
 	void shouldBlankString() {
 
 		// Given
-		final SolutionLongestPalindromicSubString solution = new SolutionLongestPalindromicSubString();
+		final SolutionLongestPalindromicSubString solution = new SolutionLongestPalindromicSubStringBruteForce();
 
 		// When
 		String targetEmptyString = solution.longestPalindromic("");
@@ -37,15 +37,19 @@ class SolutionLongestPalindromicSubStringTest {
 	void shouldLongestPalindromicSubString() {
 
 		// Given
-		final SolutionLongestPalindromicSubString solution = new SolutionLongestPalindromicSubString();
+		final SolutionLongestPalindromicSubString solution = new SolutionLongestPalindromicSubStringBruteForce();
 		final String givenString = "abcradaruidoelladfdfcllopmlkkayakkopoc";
+		final String givenLongString = "civilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth";
 
 		// When
 		String result = solution.longestPalindromic(givenString);
 		String result2 = solution.longestPalindromic("cddaaaaoplkiiiiiiilhhbhb");
+		String result3 = solution.longestPalindromic(givenLongString);
 		// Then
 		assertThat(result, is("kkayakk"));
 		assertThat(result2, is("iiiiiii"));
+		assertThat(result3, is("ranynar"));
+
 	}
 
 	@DisplayName("Get all substring from any index")
@@ -53,7 +57,7 @@ class SolutionLongestPalindromicSubStringTest {
 	void shouldListSubStringFromAnyIndex() {
 
 		// Given
-		final SolutionLongestPalindromicSubString solution = new SolutionLongestPalindromicSubString();
+		final SolutionLongestPalindromicSubStringBruteForce solution = new SolutionLongestPalindromicSubStringBruteForce();
 		final String givenString = "abcdef";
 
 		// When
@@ -70,7 +74,7 @@ class SolutionLongestPalindromicSubStringTest {
 	void shouldTrueWhenPalidron() {
 
 		// Given
-		final SolutionLongestPalindromicSubString solution = new SolutionLongestPalindromicSubString();
+		final SolutionLongestPalindromicSubStringBruteForce solution = new SolutionLongestPalindromicSubStringBruteForce();
 		final String givenString = "aa";
 
 		// When
