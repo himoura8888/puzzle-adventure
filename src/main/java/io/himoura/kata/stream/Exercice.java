@@ -8,8 +8,6 @@ import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 
 interface ExerciceFacade {
@@ -87,6 +85,8 @@ interface ExerciceFacade {
 	Map<Job, List<Person>> groupByJobAndModifiedNationality(List<Person> collection);
 
 	Object namesToString(List<Person> collection);
+
+	List<Person> sortByNameAge(List<Person> collection);
 
 }
 
@@ -169,7 +169,14 @@ public class Exercice implements ExerciceFacade {
 
 	@Override
 	public Map<Job, List<Person>> groupByJobAndModifiedNationality(List<Person> collection) {
-		return collection.stream().peek(p->p.nationality="modified").collect(Collectors.groupingBy(p -> p.job));
+		return collection.stream().peek(p -> p.nationality = "modified").collect(Collectors.groupingBy(p -> p.job));
+	}
+
+	@Override
+	public List<Person> sortByNameAge(List<Person> collection) {
+		return collection.stream()
+				.sorted(Comparator.comparing(Person::getName).thenComparing(Comparator.comparing(Person::getAge)))
+				.collect(Collectors.toList());
 	}
 
 }
@@ -346,6 +353,25 @@ class ExerciceLegacy implements ExerciceFacade {
 		return result;
 	}
 
+	@Override
+	public List<Person> sortByNameAge(List<Person> collection) {
+		Comparator<Person> comparatorNameAge = new Comparator<Person>() {
+
+			@Override
+			public int compare(Person o1, Person o2) {
+				final int compareName = o1.getName().compareTo(o2.getName());
+				if (compareName == 0) {
+					return o1.getAge().compareTo(o2.getAge());
+				}
+				return compareName;
+			}
+		};
+
+		collection.sort(comparatorNameAge);
+
+		return collection;
+	}
+
 }
 
 class Person {
@@ -372,6 +398,22 @@ class Person {
 		this(string, i);
 		this.nationality = string2;
 		this.job = job;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 
 }

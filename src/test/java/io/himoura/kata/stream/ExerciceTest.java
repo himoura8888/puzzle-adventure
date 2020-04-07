@@ -94,24 +94,24 @@ class ExerciceTest {
 		assertThat(target8, is(eva));
 		assertThat(targetLegacy, is(eva));
 	}
-	
+
 	@DisplayName("Get youngest person from the collection")
 	@Test
 	void getYoungestPersonShouldReturnYoungestPerson() throws Exception {
-		
+
 		// Given
 		ExerciceFacade exercice8 = new Exercice();
 		ExerciceLegacy exercice7 = new ExerciceLegacy();
-		
+
 		Person sara = new Person("Sara", 4);
 		Person viktor = new Person("Viktor", 40);
 		Person eva = new Person("Eva", 42);
 		List<Person> collection = Arrays.asList(sara, eva, viktor);
-		
+
 		// When
 		final Person target8 = exercice8.getYoungest(collection);
 		final Person targetLegacy = exercice7.getYoungest(collection);
-		
+
 		// Then
 		assertThat(target8, is(sara));
 		assertThat(targetLegacy, is(sara));
@@ -147,7 +147,7 @@ class ExerciceTest {
 		Person eva = new Person("Eva", 42);
 		Person anna = new Person("Anna", 5);
 		List<Person> collection = Arrays.asList(sara, eva, viktor, anna);
-		List<String> expected = Arrays.asList("Sara","Anna");
+		List<String> expected = Arrays.asList("Sara", "Anna");
 
 		// When
 		final List<String> target8 = exercice8.getKidName(collection);
@@ -157,125 +157,148 @@ class ExerciceTest {
 		assertThat(target8, contains(expected.toArray()));
 		assertThat(targetLegacy, contains(expected.toArray()));
 	}
-	
+
 	@DisplayName("Get people statistics: average age, count, maximum age, minimum age and sum og all ages.")
 	@Test
 	void testStatistic() throws Exception {
-		
+
 		// Given
 		ExerciceFacade exercice8 = new Exercice();
 		ExerciceLegacy exercice7 = new ExerciceLegacy();
 		Person sara = new Person("Sara", 4);
-	    Person viktor = new Person("Viktor", 40);
-	    Person eva = new Person("Eva", 42);
-	    List<Person> collection = Arrays.asList(sara, eva, viktor);
+		Person viktor = new Person("Viktor", 40);
+		Person eva = new Person("Eva", 42);
+		List<Person> collection = Arrays.asList(sara, eva, viktor);
 
 		// When
-	    assertThat(exercice8.getStats(collection).getAverage() ,is(28L));
-	    assertThat(exercice8.getStats(collection).getCount(),is(3L));
-	    assertThat(exercice8.getStats(collection).getMax(), is(42L));
-	    assertThat(exercice8.getStats(collection).getMin(), is(4L));
-	    assertThat(exercice8.getStats(collection).getSum(), is(86L));
-	    assertThat(exercice7.getStats(collection).getAverage() ,is(28L));
-	    assertThat(exercice7.getStats(collection).getCount(),is(3L));
-	    assertThat(exercice7.getStats(collection).getMax(), is(42L));
-	    assertThat(exercice7.getStats(collection).getMin(), is(4L));
-	    assertThat(exercice7.getStats(collection).getSum(), is(86L));
-	    // Then
+		assertThat(exercice8.getStats(collection).getAverage(), is(28L));
+		assertThat(exercice8.getStats(collection).getCount(), is(3L));
+		assertThat(exercice8.getStats(collection).getMax(), is(42L));
+		assertThat(exercice8.getStats(collection).getMin(), is(4L));
+		assertThat(exercice8.getStats(collection).getSum(), is(86L));
+		assertThat(exercice7.getStats(collection).getAverage(), is(28L));
+		assertThat(exercice7.getStats(collection).getCount(), is(3L));
+		assertThat(exercice7.getStats(collection).getMax(), is(42L));
+		assertThat(exercice7.getStats(collection).getMin(), is(4L));
+		assertThat(exercice7.getStats(collection).getSum(), is(86L));
+		// Then
 	}
-	
+
 	@DisplayName("Partition adults and kids")
 	@Test
 	void testPartition() throws Exception {
-		
+
 		// Given
 		ExerciceFacade exercice8 = new Exercice();
 		ExerciceLegacy exercice7 = new ExerciceLegacy();
 		Person sara = new Person("Sara", 4);
-        Person viktor = new Person("Viktor", 40);
-        Person eva = new Person("Eva", 42);
-        List<Person> collection = Arrays.asList(sara, eva, viktor);
-        
-        // When
-        Map<Boolean, List<Person>> result = exercice8.partitionAdults(collection);
-        assertThat(result.get(true), contains(eva, viktor));
-        assertThat(result.get(false),contains(sara));
-        result = exercice7.partitionAdults(collection);
-        assertThat(result.get(true), contains(eva, viktor));
-        assertThat(result.get(false),contains(sara));
+		Person viktor = new Person("Viktor", 40);
+		Person eva = new Person("Eva", 42);
+		List<Person> collection = Arrays.asList(sara, eva, viktor);
+
+		// When
+		Map<Boolean, List<Person>> result = exercice8.partitionAdults(collection);
+		assertThat(result.get(true), contains(eva, viktor));
+		assertThat(result.get(false), contains(sara));
+		result = exercice7.partitionAdults(collection);
+		assertThat(result.get(true), contains(eva, viktor));
+		assertThat(result.get(false), contains(sara));
 
 		// Then
 	}
-	
+
 	@DisplayName("Group people by nationality")
 	@Test
 	void testGroup() throws Exception {
-		
+
 		// Given
 		ExerciceFacade exercice8 = new Exercice();
 		ExerciceLegacy exercice7 = new ExerciceLegacy();
 		Person sara = new Person("Sara", 4, "Norwegian");
-        Person viktor = new Person("Viktor", 40, "Serbian");
-        Person eva = new Person("Eva", 42, "Norwegian");
-        List<Person> collection = Arrays.asList(sara, eva, viktor);
-                
+		Person viktor = new Person("Viktor", 40, "Serbian");
+		Person eva = new Person("Eva", 42, "Norwegian");
+		List<Person> collection = Arrays.asList(sara, eva, viktor);
 
 		// When
-        Map<String, List<Person>> result8 = exercice8.groupByNationality(collection);
-        Map<String, List<Person>> result7 = exercice7.groupByNationality(collection);
+		Map<String, List<Person>> result8 = exercice8.groupByNationality(collection);
+		Map<String, List<Person>> result7 = exercice7.groupByNationality(collection);
 
 		// Then
-        assertThat(result8.get("Norwegian"), contains(sara, eva));
-        assertThat(result8.get("Serbian"),contains(viktor));
-        assertThat(result7.get("Norwegian"),contains(sara, eva));
-        assertThat(result7.get("Serbian"),contains(viktor));
+		assertThat(result8.get("Norwegian"), contains(sara, eva));
+		assertThat(result8.get("Serbian"), contains(viktor));
+		assertThat(result7.get("Norwegian"), contains(sara, eva));
+		assertThat(result7.get("Serbian"), contains(viktor));
 	}
-	
+
 	@DisplayName("Return people names separated by comma")
 	@Test
 	void testJoin() throws Exception {
-		
+
 		// Given
 		ExerciceFacade exercice8 = new Exercice();
 		ExerciceLegacy exercice7 = new ExerciceLegacy();
-		 Person sara = new Person("Sara", 4);
-	        Person viktor = new Person("Viktor", 40);
-	        Person eva = new Person("Eva", 42);
-	        List<Person> collection = Arrays.asList(sara, viktor, eva);
-	       
+		Person sara = new Person("Sara", 4);
+		Person viktor = new Person("Viktor", 40);
+		Person eva = new Person("Eva", 42);
+		List<Person> collection = Arrays.asList(sara, viktor, eva);
+
 		// When
 
 		// Then
-	        assertThat(exercice8.namesToString(collection),is("Names: Sara, Viktor, Eva."));
-	        assertThat(exercice7.namesToString(collection),is("Names: Sara, Viktor, Eva."));
+		assertThat(exercice8.namesToString(collection), is("Names: Sara, Viktor, Eva."));
+		assertThat(exercice7.namesToString(collection), is("Names: Sara, Viktor, Eva."));
 	}
-	
+
 	@DisplayName("Group people by Job")
 	@Test
 	void testGroupJob() throws Exception {
-		
+
 		// Given
 		ExerciceFacade exercice8 = new Exercice();
 		ExerciceLegacy exercice7 = new ExerciceLegacy();
 		Person sara = new Person("Sara", 4, "Norwegian", Job.STUDENT);
-        Person viktor = new Person("Viktor", 40, "Serbian", Job.ENGINEER);
-        Person eva = new Person("Eva", 42, "Norwegian", Job.ENGINEER);
-        Person lionel = new Person("Lionel", 72, "Norwegian", Job.RETIRED);
-        List<Person> collection = Arrays.asList(sara, eva, viktor, lionel);
-                
+		Person viktor = new Person("Viktor", 40, "Serbian", Job.ENGINEER);
+		Person eva = new Person("Eva", 42, "Norwegian", Job.ENGINEER);
+		Person lionel = new Person("Lionel", 72, "Norwegian", Job.RETIRED);
+		List<Person> collection = Arrays.asList(sara, eva, viktor, lionel);
+
 		// When
-        Map<Job, List<Person>> result8 = exercice8.groupByJobAndModifiedNationality(collection);
-        Map<Job, List<Person>> result7 = exercice7.groupByJobAndModifiedNationality(collection);
+		Map<Job, List<Person>> result8 = exercice8.groupByJobAndModifiedNationality(collection);
+		Map<Job, List<Person>> result7 = exercice7.groupByJobAndModifiedNationality(collection);
 
 		// Then
-        assertThat(result8.get(Job.STUDENT), contains(sara));
-        assertThat(result8.get(Job.RETIRED),contains(lionel));
-        assertThat(result8.get(Job.RETIRED).get(0).nationality, is("modified"));
-        assertThat(result8.get(Job.ENGINEER), containsInAnyOrder(viktor, eva));
-        assertThat(result7.get(Job.STUDENT),contains(sara));
-        assertThat(result7.get(Job.RETIRED),contains(lionel));
-        assertThat(result7.get(Job.RETIRED).get(0).nationality, is("modified"));
-        assertThat(result7.get(Job.ENGINEER), containsInAnyOrder(viktor, eva));
+		assertThat(result8.get(Job.STUDENT), contains(sara));
+		assertThat(result8.get(Job.RETIRED), contains(lionel));
+		assertThat(result8.get(Job.RETIRED).get(0).nationality, is("modified"));
+		assertThat(result8.get(Job.ENGINEER), containsInAnyOrder(viktor, eva));
+		assertThat(result7.get(Job.STUDENT), contains(sara));
+		assertThat(result7.get(Job.RETIRED), contains(lionel));
+		assertThat(result7.get(Job.RETIRED).get(0).nationality, is("modified"));
+		assertThat(result7.get(Job.ENGINEER), containsInAnyOrder(viktor, eva));
+	}
+
+	@DisplayName("Sort by Name and Age")
+	@Test
+	void testSortNameAge() throws Exception {
+
+		// Given
+		ExerciceFacade exercice8 = new Exercice();
+		ExerciceLegacy exercice7 = new ExerciceLegacy();
+		Person sara = new Person("Sara", 4, "Norwegian", Job.STUDENT);
+		Person viktor = new Person("Viktor", 40, "Serbian", Job.ENGINEER);
+		Person eva = new Person("Eva", 42, "Norwegian", Job.ENGINEER);
+		Person lionel = new Person("Lionel", 72, "Norwegian", Job.RETIRED);
+		Person viktorBaby = new Person("Viktor", 1, "Serbian", Job.STUDENT);
+		Person evaSenior = new Person("Eva", 42, "Norwegian", Job.RETIRED);
+		List<Person> collection = Arrays.asList(sara, eva, viktor, lionel, viktorBaby, evaSenior);
+
+		// When
+		List<Person> result8 = exercice8.sortByNameAge(collection);
+		List<Person> result7 = exercice7.sortByNameAge(collection);
+
+		// Then
+		assertThat(result8, contains(eva, evaSenior, lionel, sara, viktorBaby, viktor));
+		assertThat(result7, contains(eva, evaSenior, lionel, sara, viktorBaby, viktor));
 	}
 
 }
