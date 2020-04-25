@@ -5,6 +5,7 @@ package io.himoura.interview.leetcode.challenge.april;
  * least one number) which has the largest sum and return its sum.
  * 
  * @version 20 avr. 2020
+ * @see https://www.geeksforgeeks.org/subarraysubstring-vs-subsequence-and-programs-to-generate-them
  */
 public class MaximumArray {
 
@@ -15,7 +16,7 @@ public class MaximumArray {
 			int sumSubArray = 0;
 			for (int end = start; end < nums.length; end++) {
 				sumSubArray += nums[end];
-				result = result < sumSubArray ? sumSubArray : result;
+				result = Math.max(sumSubArray, result);
 			}
 		}
 
