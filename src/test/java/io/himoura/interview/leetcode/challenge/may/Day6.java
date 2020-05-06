@@ -1,5 +1,9 @@
 package io.himoura.interview.leetcode.challenge.may;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 /**
  * <b>Majority Element</b>
  * <p>
@@ -25,6 +29,20 @@ package io.himoura.interview.leetcode.challenge.may;
  */
 public class Day6 {
 	public int majorityElement(int[] nums) {
+		final int half = nums.length / 2;
+		final Map<Integer, Integer> numberWithCount = new HashMap<>();
+		// Store number with own count
+		for (int num : nums) {
+			numberWithCount.merge(num, 1, Integer::sum);
+		}
+
+		for (Iterator<Integer> iterator = numberWithCount.keySet().iterator(); iterator.hasNext();) {
+			Integer num = iterator.next();
+			if (numberWithCount.get(num) > half)
+				return num;
+
+		}
+
 		return Integer.MIN_VALUE;
 	}
 }
