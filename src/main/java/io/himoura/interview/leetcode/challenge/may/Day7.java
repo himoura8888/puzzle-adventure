@@ -1,5 +1,9 @@
 package io.himoura.interview.leetcode.challenge.may;
 
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Optional;
+
 /**
  * <b>Cousins in Binary Tree</b>
  * <p>
@@ -40,6 +44,44 @@ package io.himoura.interview.leetcode.challenge.may;
  */
 public class Day7 {
 	public boolean isCousins(TreeNode root, int x, int y) {
-		return false;
+		// 1. Find parent of node
+		Deque<TreeNode> pathX = getPathFromRoot(Optional.ofNullable(root), x);
+		Deque<TreeNode> pathY = getPathFromRoot(Optional.ofNullable(root), y);
+
+		// 2. Compare
+		pathX.removeLast();
+		pathY.removeLast();
+		return pathX.size() == pathY.size() && pathX.getLast().val != pathY.getLast().val;
 	}
+
+	Deque<TreeNode> getPathFromRoot(Optional<TreeNode> root, int value) {
+		return getPathFromRoot(root, value, new LinkedList<TreeNode>());
+	}
+
+	Deque<TreeNode> getPathFromRoot(Optional<TreeNode> root, int value, Deque<TreeNode> path) {
+		if (root.isPresent()) {
+			final TreeNode node = root.get();
+			System.out.format("%d%n", node.val);
+			if (node.val == value) {
+				path.push(node);
+				return path;
+			}
+			Deque<TreeNode> nodeRecursiveLeft = getPathFromRoot(Optional.ofNullable(node.left), value, path);
+			if (!nodeRecursiveLeft.isEmpty()) {
+				path.push(node);
+				return path;
+			}
+
+			Deque<TreeNode> nodeRecursiveRight = getPathFromRoot(Optional.ofNullable(node.right), value, path);
+			if (!nodeRecursiveRight.isEmpty()) {
+				path.push(node);
+				return path;
+			}
+
+			return path;
+		} else {
+			return path;
+		}
+	}
+
 }
