@@ -8,6 +8,8 @@ import java.util.Random;
 import io.himoura.interview.leetcode.challenge.may.TreeNode;
 
 public class BinaryTree {
+	static int cpt;
+
 	/**
 	 * Find parent of specific node.This node equals to val.
 	 * 
@@ -17,7 +19,7 @@ public class BinaryTree {
 	 */
 	void displayTreeNode(TreeNode root) {
 		if (root != null) {
-			System.out.format("%d%n", root.val);
+//			System.out.format("%d%n", root.val);
 			displayTreeNode(root.left);
 			displayTreeNode(root.right);
 		}
@@ -57,7 +59,7 @@ public class BinaryTree {
 			if (node == null) {
 				continue;
 			}
-			System.out.format("%d%n", node.val);
+//			System.out.format("%d%n", node.val);
 			if (node.val == value) {
 				return node;
 			} else {
@@ -68,8 +70,20 @@ public class BinaryTree {
 		return new TreeNode();
 	}
 
+	boolean containsValueRecursiveFull(TreeNode root, int value) {
+		if (root != null) {
+			cpt++;
+			return root.val == value | containsValueRecursiveFull(root.left, value)
+					| containsValueRecursiveFull(root.right, value);
+		} else {
+			return false;
+		}
+	}
+
 	boolean containsValueRecursive(TreeNode root, int value) {
 		if (root != null) {
+			cpt++;
+//			System.out.println(root.val);
 			if (root.val == value) {
 				return true;
 			}
@@ -87,7 +101,7 @@ public class BinaryTree {
 
 		if (root.isPresent()) {
 			final TreeNode node = root.get();
-			System.out.format("%d%n", node.val);
+//			System.out.format("%d%n", node.val);
 			if (node.val == value) {
 				return Optional.of(node);
 			}
@@ -203,6 +217,28 @@ public class BinaryTree {
 			return Integer.max(node.val, Integer.max(maxValue(node.left), maxValue(node.right)));
 
 		}
+	}
+
+	Optional<TreeNode> nodeHighestValue(TreeNode node) {
+		if (node == null) {
+			return Optional.of(new TreeNode());
+		} else {
+			TreeNode result;
+			final Optional<TreeNode> maxValueLeft = nodeHighestValue(node.left);
+			final Optional<TreeNode> maxValueRight = nodeHighestValue(node.right);
+
+			if (maxValueLeft.get().val > maxValueRight.orElse(new TreeNode()).val
+					&& maxValueLeft.get().val > node.val) {
+				result = maxValueLeft.get();
+			} else if (maxValueRight.get().val > maxValueLeft.orElse(new TreeNode()).val
+					&& maxValueRight.get().val > node.val) {
+				result = maxValueRight.get();
+			} else {
+				result = node;
+			}
+			return Optional.ofNullable(result);
+		}
+
 	}
 
 	int countValue(TreeNode node, int value) {

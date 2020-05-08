@@ -34,8 +34,18 @@ class BinaryTreeTest {
 		final TreeNode parentNode3Recursive = tree.getParentNodeRecursive(Optional.of(binaryTree), 3).get();
 		int depth3 = tree.getDepth(binaryTree2);
 		final TreeNode tree500 = tree.build(501);
+		final TreeNode treeLarge = tree.build(10_500_001);
 
 		// Then
+		System.out.println("---------------------");
+		tree.cpt = 0;
+		tree.containsValueRecursive(treeLarge, 450);
+		System.out.println(tree.cpt);
+		tree.cpt = 0;
+		tree.containsValueRecursiveFull(treeLarge, 450);
+		System.out.println(tree.cpt);
+		System.out.println("---------------------");
+
 		final Deque<TreeNode> pathToNode5 = tree.getPathFromRoot(Optional.of(binaryTree2), 5);
 		assertThat(numberNode, is(4));
 		assertThat(isNodeHasValue, is(true));
@@ -44,7 +54,8 @@ class BinaryTreeTest {
 		assertThat(parentNode3Recursive.val, is(1));
 		assertThat(depth3, is(3));
 		assertThat(tree.countTreeNode(tree500), is(501));
-		assertThat(tree.maxValue(tree500), is(499));
+//		assertThat(tree.maxValue(tree500), is(499));
+		assertThat(tree.nodeHighestValue(tree500).get().val, is(499));
 		assertThat(tree.countValue(tree500, 17), is(2));
 	}
 
