@@ -33,21 +33,12 @@ public class Day8 {
 	public boolean checkStraightLine(int[][] coordinates) {
 		boolean result = true;
 		for (int i = 2; i < coordinates.length && result; i++) {
-			if (coordinates[0][0] == coordinates[i][0] || coordinates[0][1] == coordinates[i][1]) {
-				result &= true;
-			} else {
-				if (coordinates[0][1] - coordinates[1][1] == 0) {
-					result = false;
-				} else {
-
-					// Calculate coefficient
-					final int coefficientFirstSecond = Math
-							.abs((coordinates[0][0] - coordinates[1][0]) / (coordinates[0][1] - coordinates[1][1]));
-					final int coefficientFirstIelement = Math
-							.abs((coordinates[0][0] - coordinates[i][0]) / (coordinates[0][1] - coordinates[i][1]));
-					result &= coefficientFirstIelement == coefficientFirstSecond;
-				}
-			}
+			// Calculate coefficient
+			final int coefficientFirstSecond = Math
+					.abs((coordinates[0][0] - coordinates[1][0]) * (coordinates[0][1] - coordinates[i][1]));
+			final int coefficientFirstIelement = Math
+					.abs((coordinates[0][0] - coordinates[i][0]) * (coordinates[0][1] - coordinates[1][1]));
+			result &= coefficientFirstIelement == coefficientFirstSecond;
 		}
 		return result;
 	}
