@@ -17,12 +17,28 @@ package io.himoura.interview.leetcode.challenge.may;
  * Output: false</dd>
  * </dl>
  * </p>
+ * <p>
+ * <i>Constraints:
+ * <ul>
+ * <li>2 <= coordinates.length <= 1000 coordinates[i].length == 2</li>
+ * <li>-10^4 <= coordinates[i][0], coordinates[i][1] <= 10^4 coordinates</li>
+ * <li>contains no duplicate point.</li>
+ * </ul>
+ * </i>
+ * </p>
  * 
  * @version 8 mai 2020
  */
 public class Day8 {
 	public boolean checkStraightLine(int[][] coordinates) {
-		boolean result = false;
+		boolean result = true;
+		// Calculate coefficient
+		final int coefficient = (coordinates[0][0] - coordinates[1][0]) / (coordinates[0][1] - coordinates[1][1]);
+		// Apply formula x1-y1 = coefficient * (xn - yn)
+		final int formula = coordinates[0][0] - coordinates[0][1];
+		for (int i = 2; i < coordinates.length && result; i++) {
+			result &= formula == coefficient * (coordinates[i][0] - coordinates[i][1]);
+		}
 		return result;
 	}
 }
