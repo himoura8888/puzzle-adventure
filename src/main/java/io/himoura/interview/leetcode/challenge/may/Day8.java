@@ -32,17 +32,16 @@ package io.himoura.interview.leetcode.challenge.may;
 public class Day8 {
 	public boolean checkStraightLine(int[][] coordinates) {
 		boolean result = true;
-
-		final int formula = coordinates[0][0] - coordinates[0][1];
 		for (int i = 2; i < coordinates.length && result; i++) {
 			if (coordinates[0][0] == coordinates[i][0] || coordinates[0][1] == coordinates[i][1]) {
 				result &= true;
 			} else {
 				// Calculate coefficient
-				final int coefficient = (coordinates[0][0] - coordinates[1][0])
-						/ (coordinates[0][1] - coordinates[1][1]);
-				// Apply formula x1-y1 = coefficient * (xn - yn)
-				result &= formula == coefficient * (coordinates[i][0] - coordinates[i][1]);
+				final int coefficientFirstSecond = Math
+						.abs((coordinates[0][0] - coordinates[1][0]) / (coordinates[0][1] - coordinates[1][1]));
+				final int coefficientFirstIelement = Math
+						.abs((coordinates[0][0] - coordinates[i][0]) / (coordinates[0][1] - coordinates[i][1]));
+				result &= coefficientFirstIelement == coefficientFirstSecond;
 			}
 		}
 		return result;
