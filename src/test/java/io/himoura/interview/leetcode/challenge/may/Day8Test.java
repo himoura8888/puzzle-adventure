@@ -25,6 +25,8 @@ class Day8Test {
 				.checkStraightLine(new int[][] { { 1, 2 }, { 1, 3 }, { 1, 4 }, { 1, 5 }, { 1, 6 }, { 1, 7 } });
 
 		boolean resulError = day8.checkStraightLine(new int[][] { { 0, 1 }, { 1, 3 }, { -4, -7 }, { 5, 11 } });
+		boolean resulError2 = day8.checkStraightLine(
+				new int[][] { { 2, -3 }, { -8, -3 }, { -8, 6 }, { -4, 8 }, { 1, 5 }, { 4, -7 }, { 1, 7 }, { 8, 4 } });
 
 		// Then
 		assertTrue(resultExample1);
@@ -32,6 +34,7 @@ class Day8Test {
 		assertTrue(resultVertical);
 		assertTrue(resultHorizontal);
 		assertTrue(resulError);
+		assertFalse(resulError2);
 	}
 
 }

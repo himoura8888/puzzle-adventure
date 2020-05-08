@@ -36,12 +36,17 @@ public class Day8 {
 			if (coordinates[0][0] == coordinates[i][0] || coordinates[0][1] == coordinates[i][1]) {
 				result &= true;
 			} else {
-				// Calculate coefficient
-				final int coefficientFirstSecond = Math
-						.abs((coordinates[0][0] - coordinates[1][0]) / (coordinates[0][1] - coordinates[1][1]));
-				final int coefficientFirstIelement = Math
-						.abs((coordinates[0][0] - coordinates[i][0]) / (coordinates[0][1] - coordinates[i][1]));
-				result &= coefficientFirstIelement == coefficientFirstSecond;
+				if (coordinates[0][1] - coordinates[1][1] == 0) {
+					result = false;
+				} else {
+
+					// Calculate coefficient
+					final int coefficientFirstSecond = Math
+							.abs((coordinates[0][0] - coordinates[1][0]) / (coordinates[0][1] - coordinates[1][1]));
+					final int coefficientFirstIelement = Math
+							.abs((coordinates[0][0] - coordinates[i][0]) / (coordinates[0][1] - coordinates[i][1]));
+					result &= coefficientFirstIelement == coefficientFirstSecond;
+				}
 			}
 		}
 		return result;
