@@ -19,10 +19,19 @@ class Day8Test {
 				.checkStraightLine(new int[][] { { 1, 2 }, { 2, 3 }, { 3, 4 }, { 4, 5 }, { 5, 6 }, { 6, 7 } });
 		boolean resultExample2 = day8
 				.checkStraightLine(new int[][] { { 1, 1 }, { 2, 2 }, { 3, 4 }, { 4, 5 }, { 5, 6 }, { 7, 7 } });
+		boolean resultHorizontal = day8
+				.checkStraightLine(new int[][] { { -3, -2 }, { -1, -2 }, { 2, -2 }, { -2, -2 }, { 0, -2 } });
+		boolean resultVertical = day8
+				.checkStraightLine(new int[][] { { 1, 2 }, { 1, 3 }, { 1, 4 }, { 1, 5 }, { 1, 6 }, { 1, 7 } });
+
+		boolean resulError = day8.checkStraightLine(new int[][] { { 0, 1 }, { 1, 3 }, { -4, -7 }, { 5, 11 } });
 
 		// Then
 		assertTrue(resultExample1);
 		assertFalse(resultExample2);
+		assertTrue(resultVertical);
+		assertTrue(resultHorizontal);
+		assertTrue(resulError);
 	}
 
 }
