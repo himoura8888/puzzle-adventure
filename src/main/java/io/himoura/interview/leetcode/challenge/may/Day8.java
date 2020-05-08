@@ -1,5 +1,7 @@
 package io.himoura.interview.leetcode.challenge.may;
 
+import java.util.Arrays;
+
 /**
  * <b>Check If It Is a Straight Line</b>
  * <p>
@@ -27,19 +29,23 @@ package io.himoura.interview.leetcode.challenge.may;
  * </i>
  * </p>
  * 
+ * @see <a href=
+ *      "https://leetcode.com/explore/featured/card/may-leetcoding-challenge/535/week-2-may-8th-may-14th/3323/">Check
+ *      If It Is a Straight Line</a>
  * @version 8 mai 2020
  */
 public class Day8 {
+	/**
+	 * Time complexity O(n)
+	 * 
+	 * @param coordinates
+	 * @return
+	 */
 	public boolean checkStraightLine(int[][] coordinates) {
-		boolean result = true;
-		for (int i = 2; i < coordinates.length && result; i++) {
-			// Calculate coefficient
-			final int coefficientFirstSecond = Math
-					.abs((coordinates[0][0] - coordinates[1][0]) * (coordinates[0][1] - coordinates[i][1]));
-			final int coefficientFirstIelement = Math
-					.abs((coordinates[0][0] - coordinates[i][0]) * (coordinates[0][1] - coordinates[1][1]));
-			result &= coefficientFirstIelement == coefficientFirstSecond;
-		}
-		return result;
+		final int dy = coordinates[0][1] - coordinates[1][1];
+		final int dx = coordinates[0][0] - coordinates[1][0];
+		return !Arrays.stream(coordinates)
+				.map(coord -> (coordinates[0][0] - coord[0]) * dy == (coordinates[0][1] - coord[1]) * dx)
+				.anyMatch(b -> b == false);
 	}
 }
