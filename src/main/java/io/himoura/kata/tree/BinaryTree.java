@@ -3,6 +3,7 @@ package io.himoura.kata.tree;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Optional;
+import java.util.Random;
 
 import io.himoura.interview.leetcode.challenge.may.TreeNode;
 
@@ -16,7 +17,7 @@ public class BinaryTree {
 	 */
 	void displayTreeNode(TreeNode root) {
 		if (root != null) {
-//			System.out.format("%d%n", root.val);
+			System.out.format("%d%n", root.val);
 			displayTreeNode(root.left);
 			displayTreeNode(root.right);
 		}
@@ -173,6 +174,42 @@ public class BinaryTree {
 			return path;
 		} else {
 			return path;
+		}
+	}
+
+	TreeNode build(int number) {
+		if (number % 2 == 0) {
+			throw new IllegalArgumentException("number must be odd");
+		}
+		final Deque<TreeNode> nodeToAddChildren = new LinkedList<>();
+		final TreeNode root = new TreeNode();
+		nodeToAddChildren.offer(root);
+		final Random random = new Random();
+		for (int i = 0; i < number / 2; i++) {
+			TreeNode result = nodeToAddChildren.poll();
+			result.left = new TreeNode(random.nextInt(500));
+			result.right = new TreeNode(random.nextInt(500));
+			nodeToAddChildren.offer(result.left);
+			nodeToAddChildren.offer(result.right);
+		}
+
+		return root;
+	}
+
+	int maxValue(TreeNode node) {
+		if (node == null) {
+			return Integer.MIN_VALUE;
+		} else {
+			return Integer.max(node.val, Integer.max(maxValue(node.left), maxValue(node.right)));
+
+		}
+	}
+
+	int countValue(TreeNode node, int value) {
+		if (node == null) {
+			return 0;
+		} else {
+			return node.val == value ? 1 : 0 + countValue(node.left, value) + countValue(node.right, value);
 		}
 	}
 }

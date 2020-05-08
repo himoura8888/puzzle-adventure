@@ -33,6 +33,7 @@ class BinaryTreeTest {
 		final TreeNode node3Recursive = tree.getNodeRecursive(Optional.of(binaryTree), 3).get();
 		final TreeNode parentNode3Recursive = tree.getParentNodeRecursive(Optional.of(binaryTree), 3).get();
 		int depth3 = tree.getDepth(binaryTree2);
+		final TreeNode tree500 = tree.build(501);
 
 		// Then
 		final Deque<TreeNode> pathToNode5 = tree.getPathFromRoot(Optional.of(binaryTree2), 5);
@@ -42,6 +43,9 @@ class BinaryTreeTest {
 		assertThat(node3Recursive.val, is(3));
 		assertThat(parentNode3Recursive.val, is(1));
 		assertThat(depth3, is(3));
+		assertThat(tree.countTreeNode(tree500), is(501));
+		assertThat(tree.maxValue(tree500), is(499));
+		assertThat(tree.countValue(tree500, 17), is(2));
 	}
 
 }
