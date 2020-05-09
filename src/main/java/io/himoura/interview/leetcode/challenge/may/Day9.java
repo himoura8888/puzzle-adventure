@@ -32,7 +32,11 @@ public class Day9 {
 	 * @return true if num is square otherwise false
 	 */
 	public boolean isPerfectSquare(int num) {
-		boolean result = false;
-		return result;
+
+		int incr = 0;
+		while (incr * incr < num) {
+			incr++;
+		}
+		return incr * incr == num;
 	}
 }
