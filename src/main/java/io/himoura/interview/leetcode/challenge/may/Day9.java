@@ -26,17 +26,35 @@ package io.himoura.interview.leetcode.challenge.may;
  */
 public class Day9 {
 	/**
-	 * Verify num is square of number
+	 * Verify num is square of number Time Complexity O(log2)
 	 * 
 	 * @param num possible square of number
 	 * @return true if num is square otherwise false
 	 */
 	public boolean isPerfectSquare(int num) {
 
-		int incr = 0;
-		while (incr * incr < num) {
-			incr++;
+		int left = 2;
+		int right = num;
+
+		if (num < 1) {
+			return false;
 		}
-		return incr * incr == num;
+		if (num == 1) {
+			return true;
+		}
+
+		while (left <= right) {
+			final int middle = left + (right - left) / 2;
+			final long squareMiddle = (long) middle * (long) middle;
+			if (squareMiddle == num) {
+				return true;
+			}
+			if (squareMiddle > num) {
+				right = middle - 1;
+			} else {
+				left = middle + 1;
+			}
+		}
+		return false;
 	}
 }
