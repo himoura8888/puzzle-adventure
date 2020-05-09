@@ -20,10 +20,14 @@ class BinaryTreeLevelOrderTraversalTest {
 		BinaryTreeLevelOrderTraversal binaryTreeLevelOrderTraversal = new BinaryTreeLevelOrderTraversal();
 
 		TreeNode root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
+		TreeNode root2 = new TreeNode(1, new TreeNode(2, new TreeNode(3, new TreeNode(5), null), new TreeNode(4)),
+				null);
 		// When
 		List<List<Integer>> result = binaryTreeLevelOrderTraversal.levelOrder(root);
+		List<List<Integer>> result2 = binaryTreeLevelOrderTraversal.levelOrder(root2);
 
 		// Then
 		assertThat(result.size(), is(3));
+		assertThat(result2.size(), is(4));
 	}
 }
