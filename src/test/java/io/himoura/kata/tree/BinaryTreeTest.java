@@ -33,8 +33,8 @@ class BinaryTreeTest {
 		final TreeNode node3Recursive = tree.getNodeRecursive(Optional.of(binaryTree), 3).get();
 		final TreeNode parentNode3Recursive = tree.getParentNodeRecursive(Optional.of(binaryTree), 3).get();
 		int depth3 = tree.getDepth(binaryTree2);
-		final TreeNode tree500 = tree.build(501);
-		final TreeNode treeLarge = tree.build(10_500_001);
+		final TreeNode tree500 = tree.buildLarge(501);
+		final TreeNode treeLarge = tree.buildLarge(10_500_001);
 
 		// Then
 		System.out.println("---------------------");

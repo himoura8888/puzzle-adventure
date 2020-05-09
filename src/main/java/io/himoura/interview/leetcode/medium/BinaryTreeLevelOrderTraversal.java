@@ -1,10 +1,6 @@
 package io.himoura.interview.leetcode.medium;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
-import java.util.Objects;
 
 import io.himoura.interview.leetcode.challenge.may.TreeNode;
 
@@ -30,48 +26,20 @@ import io.himoura.interview.leetcode.challenge.may.TreeNode;
  *      Tree Level Order Traversal</a>
  * @version 8 mai 2020
  */
+
 public class BinaryTreeLevelOrderTraversal {
-	public List<List<Integer>> levelOrder(TreeNode root) {
-		final List<List<Integer>> result = new ArrayList<>();
-		if (Objects.isNull(root))
-			return result;
 
-		final Deque<TreeNode> nodeToTreat = new ArrayDeque<>();
-		nodeToTreat.add(root);
-		int currentLevel = 0;
-		int countCurrentLevel = 1;
-		int countNextLevel = 0;
-		while (!nodeToTreat.isEmpty()) {
-			TreeNode node = nodeToTreat.poll();
-			countCurrentLevel--;
+	private final BinaryTreeLevelOrderTraversalAlgorithm algo;
 
-			// process node
-			// lazy loading
-
-			if (result.size() <= currentLevel) {
-				result.add(new ArrayList<>());
-			}
-
-			result.get(currentLevel).add(node.val);
-
-			if (!Objects.isNull(node.left)) {
-				nodeToTreat.add(node.left);
-				countNextLevel++;
-			}
-			if (!Objects.isNull(node.right)) {
-				nodeToTreat.add(node.right);
-				countNextLevel++;
-			}
-
-			// Event change level
-			if (countCurrentLevel == 0) {
-				countCurrentLevel = countNextLevel;
-				countNextLevel = 0;
-				currentLevel++;
-			}
-
-		}
-
-		return result;
+	/**
+	 * @param algo
+	 */
+	public BinaryTreeLevelOrderTraversal(BinaryTreeLevelOrderTraversalAlgorithm algo) {
+		this.algo = algo;
 	}
+
+	public List<List<Integer>> levelOrder(TreeNode root) {
+		return algo.levelOrder(root);
+	}
+
 }

@@ -191,20 +191,43 @@ public class BinaryTree {
 		}
 	}
 
-	TreeNode build(int number) {
-		if (number % 2 == 0) {
+	public static TreeNode buildLarge(int number) {
+		return build(number, false);
+	}
+
+	public static TreeNode buildTall(int number) {
+		return build(number, true);
+	}
+
+	private static TreeNode build(int number, boolean isVeryHeight) {
+		if (number % 2 == 0 && !isVeryHeight) {
 			throw new IllegalArgumentException("number must be odd");
 		}
 		final Deque<TreeNode> nodeToAddChildren = new LinkedList<>();
 		final TreeNode root = new TreeNode();
 		nodeToAddChildren.offer(root);
 		final Random random = new Random();
-		for (int i = 0; i < number / 2; i++) {
-			TreeNode result = nodeToAddChildren.poll();
-			result.left = new TreeNode(random.nextInt(500));
-			result.right = new TreeNode(random.nextInt(500));
-			nodeToAddChildren.offer(result.left);
-			nodeToAddChildren.offer(result.right);
+
+		if (isVeryHeight) {
+			for (int i = 1; i < number; i++) {
+				TreeNode result = nodeToAddChildren.poll();
+
+				if (random.nextBoolean()) {
+					result.left = new TreeNode(random.nextInt(500));
+					nodeToAddChildren.offer(result.left);
+				} else {
+					result.right = new TreeNode(random.nextInt(500));
+					nodeToAddChildren.offer(result.right);
+				}
+			}
+		} else {
+			for (int i = 0; i < number / 2; i++) {
+				TreeNode result = nodeToAddChildren.poll();
+				result.left = new TreeNode(random.nextInt(500));
+				result.right = new TreeNode(random.nextInt(500));
+				nodeToAddChildren.offer(result.left);
+				nodeToAddChildren.offer(result.right);
+			}
 		}
 
 		return root;
