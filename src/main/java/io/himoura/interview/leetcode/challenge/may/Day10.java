@@ -67,7 +67,27 @@ package io.himoura.interview.leetcode.challenge.may;
  * @version 10 mai 2020
  */
 public class Day10 {
+	/**
+	 * Find judge of town
+	 * 
+	 * @param N     number people
+	 * @param trust relation of trust that is represented by a pair [p1, p2] (p1
+	 *              trusts p2)
+	 * @return label of judge
+	 */
 	public int findJudge(int N, int[][] trust) {
-		return Integer.MIN_VALUE;
+		// Each index represents a person and number of people who trust him minus his
+		// trust to another people
+		final int[] stock = new int[1001];
+
+		for (int[] pair : trust) {
+			stock[pair[1]]++;
+			stock[pair[0]]--;
+		}
+		for (int i = 1; i < stock.length; i++) {
+			if (stock[i] == N - 1)
+				return i;
+		}
+		return -1;
 	}
 }

@@ -27,7 +27,7 @@ class Day10Test {
 		assertThat(result2, is(3));
 		assertThat(result3, is(-1));
 		assertThat(result4, is(-1));
-		assertThat(result5, is(-3));
+		assertThat(result5, is(3));
 	}
 
 }
