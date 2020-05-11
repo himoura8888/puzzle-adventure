@@ -3,6 +3,7 @@ package io.himoura.kata.tree;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Optional;
+import java.util.Queue;
 import java.util.Random;
 
 import io.himoura.interview.leetcode.challenge.may.TreeNode;
@@ -17,15 +18,65 @@ public class BinaryTree {
 	 * @param val
 	 * @return parent
 	 */
-	void displayTreeNode(TreeNode root) {
+	static void displayTreeNode(TreeNode root) {
 		if (root != null) {
-//			System.out.format("%d%n", root.val);
+			System.out.format("%d%n", root.val);
 			displayTreeNode(root.left);
 			displayTreeNode(root.right);
 		}
 	}
 
-	int countTreeNode(TreeNode root) {
+	static void displayTreeNodeInfix(TreeNode root) {
+		if (root != null) {
+			displayTreeNodeInfix(root.left);
+			System.out.format("%d%n", root.val);
+			displayTreeNodeInfix(root.right);
+		}
+	}
+
+	static void displayTreeNodeLevel(TreeNode root, int depth) {
+
+		Queue<TreeNode> nodes = new LinkedList<>();
+		int countLevel = 1;
+		int countChildren = 0;
+		boolean isPadding = true;
+		nodes.add(root);
+		double numberPadding = 0;
+		double space = 0;
+		while (!nodes.isEmpty()) {
+			TreeNode node = nodes.poll();
+			countLevel--;
+			if (isPadding) {
+				numberPadding = Math.pow(2, --depth) - 1;
+				for (int i = 0; i++ < numberPadding;) {
+					System.out.print(" ");
+				}
+				isPadding = false;
+			}
+			System.out.print(node.val);
+			for (int i = 0; i++ < space;) {
+				System.out.print(" ");
+			}
+			if (node.left != null) {
+				countChildren++;
+				nodes.offer(node.left);
+			}
+			if (node.right != null) {
+				countChildren++;
+				nodes.offer(node.right);
+			}
+
+			if (countLevel == 0) {
+				System.out.println(" ");
+				countLevel = countChildren;
+				space = numberPadding;
+				countChildren = 0;
+				isPadding = true;
+			}
+		}
+	}
+
+	static int countTreeNode(TreeNode root) {
 		if (root != null) {
 			return countTreeNode(root.left) + countTreeNode(root.right) + 1;
 		} else {
@@ -147,7 +198,7 @@ public class BinaryTree {
 		}
 	}
 
-	int getDepth(TreeNode root) {
+	static int getDepth(TreeNode root) {
 		if (root != null) {
 
 			final int getDepthLeft = getDepth(root.left);
@@ -233,7 +284,18 @@ public class BinaryTree {
 		return root;
 	}
 
-	int maxValue(TreeNode node) {
+	public static TreeNode buildRecursive(int depth) {
+
+		if (depth == 0) {
+			return null;
+		}
+		final TreeNode treeNode = new TreeNode(depth);
+		treeNode.left = buildRecursive(depth - 1);
+		treeNode.right = buildRecursive(depth - 1);
+		return treeNode;
+	}
+
+	static int maxValue(TreeNode node) {
 		if (node == null) {
 			return Integer.MIN_VALUE;
 		} else {

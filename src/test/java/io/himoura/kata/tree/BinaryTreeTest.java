@@ -2,6 +2,7 @@ package io.himoura.kata.tree;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Deque;
 import java.util.Optional;
@@ -57,6 +58,25 @@ class BinaryTreeTest {
 //		assertThat(tree.maxValue(tree500), is(499));
 		assertThat(tree.nodeHighestValue(tree500).get().val, is(499));
 		assertThat(tree.countValue(tree500, 17), is(2));
+	}
+
+	@DisplayName("Generate Tree")
+	@Test
+	void shoudReturnBuiltTree() {
+
+		// Given
+
+		// When
+//		TreeNode root = BinaryTree.buildRecursive(4);
+		TreeNodeGame rootMax = BinaryTreeGame.buildRecursiveEvalutionFunction(5);
+
+		fail("ddd");
+//		BinaryTree.displayTreeNodeLevel(rootMax, 5);
+//
+//		// Then
+//		assertThat(BinaryTree.getDepth(rootMax), is(5));
+//		assertThat(rootMax.val, is(BinaryTree.maxValue(rootMax)));
+
 	}
 
 }
